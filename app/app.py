@@ -37,7 +37,7 @@ def search_ids():
 @app.route('/database')
 def show_database():
     try:
-        conn = sqlite3.connect('mooshyab7.db')
+        conn = sqlite3.connect('../db/mooshyab7.db')
         c = conn.cursor()
         c.execute("SELECT * FROM data")
         data = c.fetchall()
@@ -47,4 +47,4 @@ def show_database():
         return render_template('database.html', error='An error occurred while connecting to the database')
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)

@@ -18,7 +18,7 @@ class IDSearcher:
         else:
             return "Invalid input"
 
-        conn = sqlite3.connect('mooshyab7.db')
+        conn = sqlite3.connect('../db/mooshyab7.db')
         c = conn.cursor()
         success_ids = []
         with multiprocessing.Pool() as pool, \
