@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ID Searcher</title>
+</head>
+<body>
+  <form action="/search" method="get">
+    <label for="id_num">Enter ID number:</label>
+    <input type="number" id="id_num" name="id_num">
+    <button type="submit">Search</button>
+  </form>
+  {% if response %}
+    {% if response.success %}
+      <h2>Search results:</h2>
+      <pre>{{ response.data }}</pre>
+    {% else %}
+      <p>{{ response.error }}</p>
+    {% endif %}
+  {% endif %}
+</body>
+</html>

@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}جستجوی شناسه{% endblock %}
+
+{% block content %}
+<!-- your specific page content goes here -->
+<div class="container col-lg-7">
+    <div class="card">
+        <div class="card-body">
+            <a href="https://t.me/c/1162722999/21956">
+                <h1 class="card-title">⭕️پروژه موشیاب 7
+                    - مدارک جعلی</h1>
+            </a>
+            <p class="card-text" style="margin: 0%;">1- جستجو برای گواهینامه با وارد کردن یک شماره گواهینامه یا بازه
+                ای از شماره ها.</p>
+            <p class="card-text">2- لیست گواهینامه ها خودکار بروز رسانی میشود.</p>
+            <div class="d-flex justify-content-between">
+                <form method="POST" action="{{ url_for('search_ids') }}" id="search-form" onsubmit="showSpinner();">
+
+                    <div class="form-group">
+                      <label for="search_type">نوع جستجو:</label>
+                      <select id="search_type" name="search_type" class="form-control">
+                        <option value="1" selected>جستجوی موردی - یک شماره را بگرد</option>
+                        <option value="2">جستجوی بازه ای - بازه ی بین دو عدد را بگرد</option>
+                      </select>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="f1">1- شماره گواهینامه</label>
+                        <input type="number" id="f1" name="f1" required class="form-control">
+                      </div>
+                      <div class="form-group col-md-6" id="f2-group">
+                        <label for="f2">2- تا این شماره بگرد</label>
+                        <input type="number" id="f2" name="f2" class="form-control">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">جستجو</button>
+                  </form>
+                  
+                  
+                
+                
+                <div style="font-family: 'Courier New', IRANSans, sans-serif;">
+                    <b>
+                        <div id="spinner" style="display:none">
+                            <i class="fa fa-spinner fa-spin fa-3x"></i>
+                            <br>
+                            <span class="spinner-border spinner-border-sm">
+                              <code>
+                                <!-- Display the timer element -->
+                                <span id="timer" class="text-center text-danger" style="font-size: 4mm">لطفا منتظر بمانید...</span>
+                                {% if etime_max %}
+                                <br>
+                                <div id="etime-badge" class="badge badge-inverse" style="display:none"></div>
+
+                                <script>
+                                    function showSpinner() {
+                                        // get the values of f1 and f2 fields
+                                        var f1 = document.getElementById("f1").value;
+                                        var f2 = document.getElementById("f2").value;
+                                        var f3 = (f2 - f1);
+                                        var f4 = f3 * 1.6;
+
+                                        // create a new badge element with the estimated wait time
+                                        var etimeBadge = document.createElement("div");
+                                        etimeBadge.setAttribute("id", "etime-badge");
+                                        etimeBadge.setAttribute("class", "badge badge-inverse");
+                                        etimeBadge.innerHTML = "تخمین میزان انتظار " + f4 + " ثانیه";
+                                
+                                        // add the badge element to the form
+                                        var form = document.getElementById("search-form");
+                                        form.parentNode.insertBefore(etimeBadge, form.nextSibling);
+                                    }
+                                </script>
+                                
+
+                                <br>
+                                {% endif %}
+                              </code>
+                            </span>
+                          </div>
+                          
+
+                        <div id="spinner_success">
+                            <i class="fa fa-spinner fa-spin fa-3x"></i>
+                            <br>
+                            {% if flag %} <div class="badge badge-success">جستجو با موفقیت انجام شد.</div> 
+                            {% if found_ids %}
+                            {% for id in found_ids %}
+                            <div class="badge badge-warning">{{ id }} یافت شد</div>
+                            {% endfor %}
+                            <div class="badge badge-info">{{ real_time }} ثانیه </div>
+                            {% endif %}
+                            {% if not found_ids %}
+                            <div class="badge badge-warning">هیچ گواهینامه ای یافت نشد.</div>
+                            <div class="badge badge-info">{{ real_time }} ثانیه </div>
+                            {% endif %}
+                            {% endif %}
+                            {% if error %}
+
+                            <div class="badge badge-error">{{ error }}</div>
+                            {% endif %}
+                        </div>
+                    </b>
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <a href="{{ url_for('show_database') }}"><button type="button" class="btn btn-danger center-block"
+                style="margin-bottom: 1mm;" id="goto-db-page">گواهینامه ها را نشان بده</button></a>
+    </div>
+    <!-- <div id="real_time" class="text-center">
+        <p>جستجوی قبلی شما {{ real_time }} ثانیه طول کشید.</p>
+    </div></b>
+
+    <hr>
+
+    <a href="{{ url_for('show_database') }}"><button type="button" class="btn btn-danger"
+            style="margin-bottom: 1mm;" id="goto-db-page">لیست گواهینامه ها را نشان بده</button></a> -->
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#search_type').on('change', function () {
+            if ($(this).val() == '2') {
+                $('#range-field').show();
+            } else {
+                $('#range-field').hide();
+            }
+        });
+
+        $('#search-form').submit(function () {
+            $('#spinner').show();
+            $('#spinner_success').hide();
+        });
+
+        var estimated_time = parseInt('{{ etime }}');
+        var timer = setInterval(function () {
+            if (estimated_time > 0) {
+                estimated_time -= 1;
+                $('#estimated-time').text('جستجو حدودا ' + estimated_time +
+                    ' ثانیه طول خواهد کشید.');
+            } else {
+                clearInterval(timer);
+                $('#estimated-time').hide();
+            }
+        }, 1000);
+    })();
+</script>
+<script>
+    // Get the timer element
+    var timer = document.getElementById('timer');
+  
+    // Set the initial time to 0 seconds
+    var seconds = 0;
+  
+    // Set an interval that updates the timer every second
+    var interval = setInterval(function() {
+      // Increment the seconds counter
+      seconds++;
+  
+      // Format the time as minutes and seconds
+      // var minutes = Math.floor(seconds / 60);
+      // var remainingSeconds = seconds % 60;
+      var time = seconds + ' ثانیه';
+  
+      // Update the timer element
+      timer.innerHTML = 'لطفا منتظر بمانید... (' + time + ')';
+    }, 1000);
+  </script>
+<script>
+    const searchType = document.querySelector('#search_type');
+    const f2Group = document.querySelector('#f2-group');
+  
+    // Hide f2 input on page load if search type is 1
+    if (searchType.value === '1') {
+      f2Group.style.display = 'none';
+    }
+  
+    // Show/hide f2 input when search type value changes
+    searchType.addEventListener('change', () => {
+      if (searchType.value === '1') {
+        f2Group.style.display = 'none';
+      } else {
+        f2Group.style.display = 'block';
+      }
+    });
+  </script>
+{% endblock %}
