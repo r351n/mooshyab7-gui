@@ -11,7 +11,11 @@ __pycache__/
 
 # jsonl files
 *.jsonl
-
+*.db
+db/
+*.gitignore
+*.gitattributes
+.mooshyab7/
 # Distribution / packaging
 .Python
 build/
