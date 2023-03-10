@@ -16,8 +16,9 @@
     </style>
 </head>
 <body>
-    <a href="{{ url_for('search_page') }}" class="btn btn-primary mb-3">به صفحه جستجو بگرد</a>
-    <button class="btn btn-primary mb-3" onclick="downloadCSV()">Download as CSV</button>
+    <a href="{{ url_for('search_page') }}" class="btn btn-primary">به صفحه جستجو برگرد</a>
+    <button class="btn btn-primary" onclick="downloadCSV()">دانلود لیست در قالب csv</button>
+    
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>

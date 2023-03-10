@@ -34,7 +34,7 @@
                         <input type="number" id="f2" name="f2" class="form-control">
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">جستجو</button>
+                    <button type="submit" class="btn badge">جستجو</button>
                   </form>
                   
                   
@@ -47,7 +47,7 @@
                             <br>
                             <span class="spinner-border spinner-border-sm">
                               <code>
-                                <!-- Display the timer element -->
+                                <br>
                                 <span id="timer" class="text-center text-danger" style="font-size: 4mm">لطفا منتظر بمانید...</span>
                                 {% if etime_max %}
                                 <br>
@@ -73,8 +73,6 @@
                                     }
                                 </script>
                                 
-
-                                <br>
                                 {% endif %}
                               </code>
                             </span>
@@ -107,8 +105,10 @@
         </div>
         <br>
         <hr>
-        <a href="{{ url_for('show_database') }}"><button type="button" class="btn btn-danger center-block"
+        <a href="{{ url_for('show_database') }}"><button type="button" class="btn btn-primary"
                 style="margin-bottom: 1mm;" id="goto-db-page">گواهینامه ها را نشان بده</button></a>
+                <a href="{{ url_for('logout') }}"><button type="button" class="btn btn-danger"
+                  style="margin-bottom: 1mm;" id="goto-db-page">خروج</button></a>
     </div>
     <!-- <div id="real_time" class="text-center">
         <p>جستجوی قبلی شما {{ real_time }} ثانیه طول کشید.</p>
