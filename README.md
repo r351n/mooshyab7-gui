@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-    <img src="[https://raw.githubusercontent.com/r351n/webamooz-assistant-bot/main/Screenshot.png](https://raw.githubusercontent.com/r351n/mooshyab7-gui/main/mooshyab-7-gui.png)" alt="mooshyab-7">
+    <img src="https://raw.githubusercontent.com/r351n/mooshyab7-gui/main/mooshyab-7-gui.png" alt="mooshyab-7">
 </p>
 
 <br>
